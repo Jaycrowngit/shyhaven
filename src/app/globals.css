@@ -1,0 +1,219 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+/* Brand tokens exposed to Tailwind: bg-primary, text-navy, bg-accent, font-display, etc. */
+@theme inline {
+  --color-navy: var(--sh-navy);
+  --color-primary: var(--sh-primary);
+  --color-primary-soft: var(--sh-primary-soft);
+  --color-sky-line: var(--sh-sky-line);
+  --color-verified: var(--sh-verified);
+  --color-accent: var(--sh-accent);
+  --color-danger: var(--sh-danger);
+  --color-bg: var(--sh-bg);
+  --color-surface: var(--sh-surface);
+  --color-text: var(--sh-text);
+  --color-muted: var(--sh-muted);
+  --color-border: var(--sh-border);
+  --color-heading: var(--sh-heading);
+  --color-on-primary: var(--sh-on-primary);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-jakarta);
+}
+
+/* Page width: full screen width with side padding that grows with the screen. Capped only on ultra-wide monitors. */
+@utility shell {
+  width: 100%;
+  max-width: 1920px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 6rem);
+}
+
+/*
+ * Web-app-only tokens (not in the shared tokens.css).
+ * Logo colours follow the brand kit: full colour on light, reversed (white roof, walls and wordmark) on dark.
+ * Headings use navy on light; in dark mode navy is a background colour, so headings switch to text colour.
+ */
+:root {
+  --sh-logo-mark: #1d5fd6;
+  --sh-logo-word: #0e2a47;
+  --sh-heading: var(--sh-navy);
+  --sh-on-primary: #ffffff;
+  --sh-amber-ink: #0e2a47;
+  /* Hover shades, same as the marketing site (site/src/pages/index.astro) */
+  --sh-primary-hover: #174eb3;
+  --sh-accent-hover: #d4841c;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+}
+
+/* On navy surfaces the logo is reversed: white roof, walls and wordmark (brand kit). */
+.logo-reversed {
+  --sh-logo-mark: #ffffff;
+  --sh-logo-word: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sh-logo-mark: #ffffff;
+    --sh-logo-word: #ffffff;
+    --sh-heading: var(--sh-text);
+    --sh-on-primary: #0a1420;
+  }
+}
+
+:root[data-theme="dark"] {
+  --sh-logo-mark: #ffffff;
+  --sh-logo-word: #ffffff;
+  --sh-heading: var(--sh-text);
+  --sh-on-primary: #0a1420;
+}
+
+body {
+  background: var(--sh-bg);
+  color: var(--sh-text);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 3px solid var(--sh-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * Hero entrance. Plain CSS so the headline and photo paint immediately, before any JavaScript loads
+ * (Blueprint 12: LCP under 2.5 s on a mid-range phone). Delay per element via the --d custom property.
+ */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em);
+  }
+}
+@keyframes arch-reveal {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes settle {
+  from {
+    transform: scale(1.18);
+  }
+}
+@keyframes sun-rise {
+  from {
+    opacity: 0;
+    transform: translateY(120px) scale(0.85);
+  }
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.85);
+  }
+}
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes bob {
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes drift {
+  50% {
+    transform: translate(40px, 30px);
+  }
+}
+.anim-rise {
+  animation: rise-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+.anim-arch {
+  animation: arch-reveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+.anim-settle {
+  animation: settle 1.8s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+.anim-sun {
+  animation: sun-rise 1.4s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+.anim-pop {
+  animation: pop-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+.anim-draw {
+  stroke-dasharray: 1;
+  animation: draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+.anim-bob {
+  animation: bob 5s ease-in-out var(--d, 0s) infinite;
+}
+.anim-drift {
+  animation: drift 20s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-rise,
+  .anim-arch,
+  .anim-settle,
+  .anim-sun,
+  .anim-pop,
+  .anim-draw,
+  .anim-bob,
+  .anim-drift {
+    animation: none;
+  }
+}
+
+/* Partner carousel: each track holds its set twice and slides by half its width, so the loop is seamless. */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+.marquee-reverse {
+  animation-direction: reverse;
+  animation-duration: 46s;
+}
+.marquee-group:hover .marquee-track,
+.marquee-group:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}

@@ -1,0 +1,55 @@
+/* SkyHaven design tokens as CSS variables. Import once in each web app's global stylesheet. */
+:root {
+  --sh-navy: #0E2A47;
+  --sh-primary: #1D5FD6;
+  --sh-primary-soft: #E7EFFC;
+  --sh-sky-line: #8DB4FA;
+  --sh-verified: #0E8A79;
+  --sh-accent: #E8962B;
+  --sh-danger: #C83C3C;
+  --sh-bg: #F5F8FC;
+  --sh-surface: #FFFFFF;
+  --sh-text: #15202E;
+  --sh-muted: #55657B;
+  --sh-border: #DAE2EE;
+
+  --sh-font-display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --sh-font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+  --sh-font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+
+  --sh-radius-sm: 6px;
+  --sh-radius-md: 10px;
+  --sh-radius-lg: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sh-navy: #0D2240;
+    --sh-primary: #6E9FF6;
+    --sh-primary-soft: #14284A;
+    --sh-verified: #3EC2AC;
+    --sh-accent: #F2AE4E;
+    --sh-danger: #F07B7B;
+    --sh-bg: #0A1420;
+    --sh-surface: #101D2E;
+    --sh-text: #E6ECF5;
+    --sh-muted: #97A8BF;
+    --sh-border: #21324A;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --sh-navy: #0D2240;
+  --sh-primary: #6E9FF6;
+  --sh-primary-soft: #14284A;
+  --sh-verified: #3EC2AC;
+  --sh-accent: #F2AE4E;
+  --sh-danger: #F07B7B;
+  --sh-bg: #0A1420;
+  --sh-surface: #101D2E;
+  --sh-text: #E6ECF5;
+  --sh-muted: #97A8BF;
+  --sh-border: #21324A;
+  color-scheme: dark;
+}
