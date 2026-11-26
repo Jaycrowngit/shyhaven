@@ -69,7 +69,7 @@ export function Policy({ initialGroup = 'renters' }: { initialGroup?: 'renters' 
   const items = GROUPS.find((g) => g.key === group)!.items;
 
   return (
-    <section id="policy" className="scroll-mt-20 border-y border-border bg-[#F5F8FC] py-[clamp(72px,9vw,120px)]">
+    <section id="policy" className="scroll-mt-20 border-y border-border bg-[#F5F8FC] py-[clamp(56px,7vw,96px)]">
       <div className="shell grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="flex flex-col gap-8">
           <SectionHeading eyebrow="Our policy" title="Our rules, in plain words">

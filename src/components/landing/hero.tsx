@@ -22,13 +22,13 @@ export function Hero() {
   return (
     <section ref={ref} className="relative isolate overflow-hidden bg-white">
       <SkyBackdrop />
-      <div className="shell grid items-center gap-14 pt-12 pb-20 lg:grid-cols-[1.15fr_0.85fr] lg:gap-[6vw] lg:pt-20 lg:pb-28">
+      <div className="shell grid items-center gap-12 pt-10 pb-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-[6vw] lg:pt-14 lg:pb-20">
         <div className="max-w-[640px] 2xl:max-w-[780px]">
           <p className="anim-rise mb-6 inline-flex items-center rounded-full border border-border bg-white/80 px-4 py-1.5 text-sm font-semibold text-muted backdrop-blur">
             Built for Nigeria · Verified homes · Protected rent
           </p>
 
-          <h1 className="font-display text-[clamp(2.6rem,5.2vw,5.4rem)] leading-[1.04] font-extrabold tracking-[-0.03em] text-navy">
+          <h1 className="font-display text-[clamp(2.4rem,4.4vw,4.5rem)] leading-[1.04] font-extrabold tracking-[-0.03em] text-navy">
             <span className="block">
               {['Find', 'a', 'verified', 'home.'].map((w, i) => (
                 <span key={i} className="anim-rise mr-[0.22em] inline-block" style={d(0.05 + i * 0.07)}>
@@ -49,7 +49,7 @@ export function Hero() {
             </span>
           </h1>
 
-          <p className="anim-rise mt-6 max-w-[34em] text-[clamp(1.05rem,1.6vw,1.2rem)] leading-relaxed text-muted" style={d(0.55)}>
+          <p className="anim-rise mt-6 max-w-[34em] text-[clamp(1rem,1.4vw,1.125rem)] leading-relaxed text-muted" style={d(0.55)}>
             Every listing is checked by our team, and your rent is held until you move in. No fake listings, no inspection fees to agents for houses that don’t exist, no caution fee that never comes back.
           </p>
 
@@ -61,7 +61,7 @@ export function Hero() {
               <input
                 id="hero-q"
                 name="q"
-                placeholder="Try Yaba, Lekki or Wuse 2"
+                placeholder="Try Yaba, Ajah or Kubwa"
                 autoComplete="off"
                 className="min-w-0 flex-1 rounded-xl px-4 py-3.5 text-base text-navy placeholder:text-[#7D8A9C] focus:outline-none"
               />
@@ -86,7 +86,7 @@ export function Hero() {
           </ul>
         </div>
 
-        <div className="relative mx-auto w-[min(100%,420px)] lg:mr-4 lg:ml-auto xl:w-[480px] 2xl:w-[580px]">
+        <div className="relative mx-auto w-[min(100%,380px)] lg:mr-4 lg:ml-auto xl:w-[420px] 2xl:w-[500px]">
           {/* The sun rising behind the arch: the brand's move-in moment */}
           <motion.div style={{ y: sunY }} className="absolute -right-[18%] -bottom-[6%] -z-10 w-[58%]">
             <div
@@ -103,12 +103,12 @@ export function Hero() {
             <div className="anim-arch relative aspect-[4/5] overflow-hidden rounded-[999px_999px_22px_22px] shadow-[0_30px_60px_-20px_rgba(14,42,71,0.45)]" style={d(0.1)}>
               <div className="anim-settle absolute inset-0" style={d(0.1)}>
                 <Image
-                  src="/images/sample/apartment-02.jpg"
-                  alt="Apartment building with plants on its balconies under a clear blue sky"
+                  src="/images/sample/flats-lagos-01.jpg"
+                  alt="Block of flats with terracotta balconies under a blue sky"
                   fill
                   priority
-                  sizes="(min-width: 1536px) 580px, (min-width: 1024px) 480px, 90vw"
-                  className="object-cover object-[58%_50%]"
+                  sizes="(min-width: 1536px) 500px, (min-width: 1024px) 420px, 90vw"
+                  className="object-cover object-[60%_70%]"
                 />
               </div>
             </div>

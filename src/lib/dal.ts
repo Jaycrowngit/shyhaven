@@ -16,8 +16,8 @@ import type { PolicyVersion, SearchParams, User } from './types';
 
 // ---------- Session ----------
 
-/** The signed-in user, or null. Deduplicated per request. */
-export const getCurrentUser = cache(async (): Promise<User | null> => {
+/** The signed-in user, or null if signed out. Throws if the API can't be reached. Deduplicated per request. */
+const loadUser = cache(async (): Promise<User | null> => {
   const token = await getAccessToken();
   if (!token) return null;
   try {
@@ -28,9 +28,25 @@ export const getCurrentUser = cache(async (): Promise<User | null> => {
   }
 });
 
-/** Returns the user and token, or sends them to sign in and come back to `returnTo`. */
+/**
+ * The signed-in user, or null. For public pages (header, listing pages, sign-in) that only adapt to the user:
+ * if the API can't be reached they render as signed out instead of failing.
+ */
+export const getCurrentUser = cache(async (): Promise<User | null> => {
+  try {
+    return await loadUser();
+  } catch (e) {
+    if (isApiError(e) && e.code === 'unavailable') return null;
+    throw e;
+  }
+});
+
+/**
+ * Returns the user and token, or sends them to sign in and come back to `returnTo`.
+ * If the API can't be reached this throws, so signed-in pages show the error page rather than a sign-in loop.
+ */
 export async function requireUser(returnTo: string): Promise<{ user: User; token: string }> {
-  const [token, user] = await Promise.all([getAccessToken(), getCurrentUser()]);
+  const [token, user] = await Promise.all([getAccessToken(), loadUser()]);
   if (!token || !user) redirect(`/sign-in?next=${encodeURIComponent(returnTo)}`);
   return { user, token };
 }

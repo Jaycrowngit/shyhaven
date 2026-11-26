@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useActionState, useState } from 'react';
 import { forgotPasswordAction, resendResetCodeAction, resetPasswordAction, verifyResetCodeAction, type ResetState } from '@/app/actions/auth';
 import { SubmitButton } from '../submit-button';
-import { AuthHeading, CodeField, FormAlert, PasswordField, ResendCode, TestCodeNotice, TextField } from './fields';
+import { AuthHeading, CodeField, FormAlert, PasswordField, ResendCode, TextField } from './fields';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const btnPrimary =
@@ -76,7 +76,6 @@ function VerifyStep({ initial, onDone }: { initial: ResetState; onDone: (s: Rese
       </AuthHeading>
       <form action={action} className="flex flex-col gap-5" noValidate>
         <input type="hidden" name="resetId" value={current.resetId} />
-        <TestCodeNotice code={current.devCode} />
         <FormAlert>{state.error}</FormAlert>
         <CodeField error={state.fields?.code} />
         <SubmitButton className={btnPrimary} pendingLabel="Checking…">
@@ -86,7 +85,7 @@ function VerifyStep({ initial, onDone }: { initial: ResetState; onDone: (s: Rese
           initialSeconds={current.resendIn ?? 60}
           onResend={async () => {
             const res = await resendResetCodeAction(current.identifier ?? '');
-            if (res.resetId) setCurrent((c) => ({ ...c, resetId: res.resetId, sentTo: res.sentTo, devCode: res.devCode }));
+            if (res.resetId) setCurrent((c) => ({ ...c, resetId: res.resetId, sentTo: res.sentTo }));
             return res;
           }}
         />

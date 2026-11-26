@@ -30,7 +30,7 @@ export function Landlords() {
   const imgY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
 
   return (
-    <section id="landlords" className="scroll-mt-20 bg-white py-[clamp(72px,9vw,120px)]">
+    <section id="landlords" className="scroll-mt-20 bg-white py-[clamp(56px,7vw,96px)]">
       <div className="shell grid items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="flex flex-col gap-8">
           <SectionHeading eyebrow="For landlords" title="Your home goes to the right tenant">

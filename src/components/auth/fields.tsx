@@ -365,16 +365,6 @@ export function ResendCode({ initialSeconds, onResend }: { initialSeconds: numbe
   );
 }
 
-/** Shown only on test data, where no SMS is sent. */
-export function TestCodeNotice({ code }: { code?: string }) {
-  if (!code) return null;
-  return (
-    <p className="rounded-xl border border-primary/20 bg-primary-soft px-4 py-3 text-sm text-primary" role="status">
-      Test mode: no SMS is sent. Your code is <strong className="font-mono tracking-[0.3em]">{code}</strong>
-    </p>
-  );
-}
-
 export function FormAlert({ tone = 'danger', children }: { tone?: 'danger' | 'success'; children?: ReactNode }) {
   if (!children) return null;
   return (

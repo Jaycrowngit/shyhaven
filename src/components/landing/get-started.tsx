@@ -7,7 +7,7 @@ import { ease } from './motion';
 
 export function GetStarted() {
   return (
-    <section id="get-started" className="shell scroll-mt-20 bg-white pb-[clamp(72px,9vw,120px)]">
+    <section id="get-started" className="shell scroll-mt-20 bg-white pb-[clamp(56px,7vw,96px)]">
       <motion.div
         className="relative isolate overflow-hidden rounded-[32px] bg-[#0E2A47] px-6 py-16 text-white sm:px-12 sm:py-20"
         initial={{ opacity: 0, y: 40, scale: 0.98 }}
@@ -32,7 +32,7 @@ export function GetStarted() {
 
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-5 text-center">
           <p className="text-sm font-semibold tracking-[0.14em] text-[#8DB4FA] uppercase">Get started</p>
-          <h2 className="font-display text-[clamp(2rem,4.4vw,3.2rem)] leading-[1.08] font-extrabold tracking-[-0.02em] text-balance">Your next home, without the risk.</h2>
+          <h2 className="font-display text-[clamp(1.9rem,3.8vw,2.8rem)] leading-[1.08] font-extrabold tracking-[-0.02em] text-balance">Your next home, without the risk.</h2>
           <p className="text-lg text-white/75">Create your account with your phone number in under a minute. No password, no fees to sign up.</p>
           <p className="flex flex-wrap items-center justify-center gap-2 text-sm text-white/75">
             <span className="rounded-full border border-white/20 px-3.5 py-1.5">iPhone app · coming soon</span>

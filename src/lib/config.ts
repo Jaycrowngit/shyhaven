@@ -2,17 +2,15 @@ import 'server-only';
 
 /**
  * Where the web app gets its data.
- * - `mock`: an in-memory SkyHaven API with seeded sample data and a sandbox payment gateway. Default until the
- *   NestJS endpoints exist, so every flow can be built and demoed end to end.
- * - `api`: the real SkyHaven API at `API_URL`.
+ * - Sign-up, sign-in, password reset and everything a signed-in user does: always the real SkyHaven API at `API_URL`.
+ * - Public listing reads (search, listing pages, cities, inspection slots): the 16 sample homes until
+ *   `SKYHAVEN_LISTINGS_SOURCE=api`, then the real API.
  */
-export const DATA_SOURCE: 'mock' | 'api' = process.env.SKYHAVEN_DATA_SOURCE === 'api' ? 'api' : 'mock';
-
 export const API_URL = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/v1';
 
-export const IS_SANDBOX = DATA_SOURCE === 'mock';
+export const LISTINGS_SOURCE: 'sample' | 'api' = process.env.SKYHAVEN_LISTINGS_SOURCE === 'api' ? 'api' : 'sample';
 
-/** Developer shortcuts (demo sign-in, acting as reviewer). Only on `npm run dev` with test data; never in a build. */
-export const DEV_TOOLS = IS_SANDBOX && process.env.NODE_ENV === 'development';
+/** Sample homes use stock photos, so the whole site stays out of search engines while they are shown. */
+export const SHOWS_SAMPLE_LISTINGS = LISTINGS_SOURCE === 'sample';
 
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';

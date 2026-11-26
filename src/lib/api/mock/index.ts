@@ -600,7 +600,15 @@ function asNetworkCalls<T extends object>(impl: T): T {
   return wrapped as T;
 }
 
-const mockImpl: SkyHavenApi = {
+/**
+ * For its own tests only, the in-memory API also returns the code it would have sent. The web app never uses this
+ * API for accounts, so no code ever reaches a page.
+ */
+type CodeMethods = 'startSignup' | 'resendSignupCode' | 'requestPasswordReset' | 'requestOtp';
+type WithCode<F> = F extends (...args: infer A) => Promise<infer R> ? (...args: A) => Promise<R & { devCode?: string }> : never;
+type MockApi = Omit<SkyHavenApi, CodeMethods> & { [K in CodeMethods]: WithCode<SkyHavenApi[K]> };
+
+const mockImpl: MockApi = {
   // ----- Sign-up -----
   async startSignup(input) {
     const d = db();
@@ -1167,7 +1175,7 @@ const mockImpl: SkyHavenApi = {
   },
 };
 
-export const mockApi: SkyHavenApi = asNetworkCalls(mockImpl);
+export const mockApi: MockApi = asNetworkCalls(mockImpl);
 
 // ---------- Sandbox-only controls (no equivalent in the real API) ----------
 export const sandbox = {

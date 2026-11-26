@@ -10,7 +10,7 @@ import { mockApi as api, sandbox } from './index';
 
 const START = new Date('2026-11-25T09:00:00Z');
 const YABA = 'bright-2-bedroom-flat-near-unilag';
-const VI = 'modern-2-bedroom-on-victoria-island';
+const OGBA = '2-bedroom-flat-in-ogba';
 
 const PASSWORD = 'Lekki-sunrise-42';
 
@@ -83,7 +83,7 @@ describe('seed data', () => {
   });
 
   it('finds homes by area and city', async () => {
-    expect((await api.searchListings({ q: 'gra port harcourt' })).total).toBe(1);
+    expect((await api.searchListings({ q: 'rumuokoro port harcourt' })).total).toBe(1);
     expect((await api.searchListings({ city: 'Abuja' })).items.every((l) => l.city === 'Abuja')).toBe(true);
   });
 });
@@ -226,7 +226,7 @@ describe('renter: book, pay, move in (Blueprint 05 and 06)', () => {
     const booking = await api.createBooking(renter, { listingId: listing.id, moveInDate: listing.availableFrom });
     expect(booking.status).toBe('pending_payment');
     // Renters see what they pay, never the commission.
-    expect(booking.price).toEqual({ rent: 280_000_000, tenantFee: 0, cautionDeposit: 30_000_000, tenantTotal: 310_000_000 });
+    expect(booking.price).toEqual({ rent: 55_000_000, tenantFee: 0, cautionDeposit: 5_500_000, tenantTotal: 60_500_000 });
     expect(booking.address).toBeNull();
     expect(booking.landlordContact).toBeNull();
 
@@ -265,7 +265,7 @@ describe('renter: book, pay, move in (Blueprint 05 and 06)', () => {
 
   it('expires an unpaid booking after 30 minutes', async () => {
     const renter = await signIn('+2348031234567');
-    const listing = (await api.getListing(VI))!;
+    const listing = (await api.getListing(OGBA))!;
     const booking = await api.createBooking(renter, { listingId: listing.id, moveInDate: listing.availableFrom });
     vi.setSystemTime(START.getTime() + 31 * 60_000);
     expect((await api.getBooking(renter, booking.id)).status).toBe('expired');
@@ -275,7 +275,7 @@ describe('renter: book, pay, move in (Blueprint 05 and 06)', () => {
   it('refunds a second renter whose payment lands after the home was reserved', async () => {
     const a = await signIn('+2348031234567');
     const b = await signIn('+2348051234567');
-    const listing = (await api.getListing(VI))!;
+    const listing = (await api.getListing(OGBA))!;
     const ba = await api.createBooking(a, { listingId: listing.id, moveInDate: listing.availableFrom });
     const bb = await api.createBooking(b, { listingId: listing.id, moveInDate: listing.availableFrom });
     const pa = await api.initPayment(a, ba.id, 'a');
@@ -289,14 +289,14 @@ describe('renter: book, pay, move in (Blueprint 05 and 06)', () => {
 
   it('auto-releases 72 hours after move-in unless there is a dispute', async () => {
     const renter = await signIn('+2348031234567');
-    const { booking } = await bookAndPay(renter, VI);
+    const { booking } = await bookAndPay(renter, OGBA);
     vi.setSystemTime(Date.parse(booking.autoReleaseAt!) + 1000);
     expect((await api.getBooking(renter, booking.id)).status).toBe('released');
   });
 
   it('a dispute freezes the auto-release', async () => {
     const renter = await signIn('+2348031234567');
-    const { booking } = await bookAndPay(renter, VI);
+    const { booking } = await bookAndPay(renter, OGBA);
     await api.openDispute(renter, booking.id, { reason: 'The second bedroom has no window, unlike the photos.' });
     vi.setSystemTime(Date.parse(booking.autoReleaseAt!) + 1000);
     expect((await api.getBooking(renter, booking.id)).status).toBe('disputed');
@@ -305,7 +305,7 @@ describe('renter: book, pay, move in (Blueprint 05 and 06)', () => {
   it('never lets one renter read another renter’s booking', async () => {
     const a = await signIn('+2348031234567');
     const b = await signIn('+2348051234567');
-    const { booking } = await bookAndPay(a, VI);
+    const { booking } = await bookAndPay(a, OGBA);
     await expect(api.getBooking(b, booking.id)).rejects.toMatchObject({ code: 'not_found' });
   });
 });

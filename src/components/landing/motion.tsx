@@ -72,7 +72,7 @@ export function SectionHeading({ eyebrow, title, children, center = false }: { e
       <p className="inline-flex w-fit items-center rounded-full bg-primary-soft px-3.5 py-1.5 text-[13px] font-semibold tracking-wide text-primary uppercase">
         {eyebrow}
       </p>
-      <h2 className="font-display text-[clamp(1.85rem,3.4vw,2.7rem)] leading-[1.12] font-extrabold tracking-[-0.02em] text-balance text-navy">{title}</h2>
+      <h2 className="font-display text-[clamp(1.75rem,3vw,2.4rem)] leading-[1.12] font-extrabold tracking-[-0.02em] text-balance text-navy">{title}</h2>
       {children && <div className="text-[1.075rem] leading-relaxed text-muted">{children}</div>}
     </Reveal>
   );

@@ -34,7 +34,7 @@ const ROWS = [
 
 export function Comparison() {
   return (
-    <section id="compare" className="scroll-mt-20 bg-white py-[clamp(72px,9vw,120px)]">
+    <section id="compare" className="scroll-mt-20 bg-white py-[clamp(56px,7vw,96px)]">
       <div className="shell flex flex-col gap-12">
         <SectionHeading eyebrow="Why SkyHaven" title="Renting the usual way vs renting with SkyHaven" center>
           Most Nigerians have a story about a fake agent, a lost caution fee or a house that wasn’t what was shown. Here’s what changes.

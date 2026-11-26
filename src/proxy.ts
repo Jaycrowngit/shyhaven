@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 /**
  * Runs before signed-in pages render.
  * 1. Optimistic guard: no session cookies at all means straight to sign-in (pages still check properly via the DAL).
- * 2. Real API only: if the 15-minute access token has expired but the refresh token is still valid, rotate both
+ * 2. If the 15-minute access token has expired but the refresh token is still valid, rotate both
  *    here, because Server Components can't set cookies while rendering.
  */
 const ACCESS = 'sh_at';
@@ -20,7 +20,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (!access && refresh && process.env.SKYHAVEN_DATA_SOURCE === 'api') {
+  if (!access && refresh) {
     try {
       const res = await fetch(`${API_URL}/auth/refresh`, {
         method: 'POST',
@@ -53,5 +53,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/account/:path*', '/bookings/:path*', '/landlord/:path*', '/test-checkout/:path*'],
+  matcher: ['/account/:path*', '/bookings/:path*', '/landlord/:path*'],
 };

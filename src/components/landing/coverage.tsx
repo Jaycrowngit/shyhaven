@@ -15,7 +15,7 @@ export async function Coverage() {
   const counts = await Promise.all(cities.map(async (city) => ({ city, total: (await searchListings({ city })).total })));
 
   return (
-    <section id="cities" className="scroll-mt-20 bg-white py-[clamp(72px,9vw,120px)]">
+    <section id="cities" className="scroll-mt-20 bg-white py-[clamp(56px,7vw,96px)]">
       <div className="shell grid gap-14 lg:grid-cols-[1fr_1fr] lg:items-start">
         <div className="flex flex-col gap-8">
           <SectionHeading eyebrow="Across Nigeria" title="Verified homes in more Nigerian cities">

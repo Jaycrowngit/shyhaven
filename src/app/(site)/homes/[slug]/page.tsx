@@ -72,12 +72,6 @@ async function Listing({ params }: { params: Props['params'] }) {
         <span aria-hidden>/</span> <span>{listing.area}</span>
       </nav>
 
-      {listing.isSample && (
-        <Alert tone="info">
-          <strong>Sample listing.</strong> This home uses stock photos to show how SkyHaven works. It is not a real home for rent.
-        </Alert>
-      )}
-
       <Gallery listing={listing} />
 
       <div className="grid gap-8 lg:grid-cols-[1fr_380px]">

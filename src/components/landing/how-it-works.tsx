@@ -70,7 +70,7 @@ export function HowItWorks({ initialTrack = 'renters', tone = 'mist' }: { initia
   return (
     <section
       id="how-it-works"
-      className={`scroll-mt-20 py-[clamp(72px,9vw,120px)] ${tone === 'mist' ? 'border-y border-border bg-[#F5F8FC]' : 'bg-white'}`}
+      className={`scroll-mt-20 py-[clamp(56px,7vw,96px)] ${tone === 'mist' ? 'border-y border-border bg-[#F5F8FC]' : 'bg-white'}`}
     >
       <div className="shell flex flex-col gap-12 ">
         <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">

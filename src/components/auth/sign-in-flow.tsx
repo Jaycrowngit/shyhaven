@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useActionState, useState } from 'react';
 import { requestOtpAction, signInAction, verifyOtpAction, type OtpState, type SignInState } from '@/app/actions/auth';
 import { SubmitButton } from '../submit-button';
-import { AuthHeading, CodeField, FormAlert, PasswordField, ResendCode, TestCodeNotice, TextField } from './fields';
+import { AuthHeading, CodeField, FormAlert, PasswordField, ResendCode, TextField } from './fields';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const btnPrimary =
@@ -117,14 +117,12 @@ function CodeSignIn({ next }: { next: string }) {
 
 function CodeVerify({ start, next }: { start: OtpState; next: string }) {
   const [state, verify] = useActionState(verifyOtpAction, start);
-  const [devCode, setDevCode] = useState(start.devCode);
   return (
     <form action={verify} className="flex flex-col gap-5" noValidate>
       <input type="hidden" name="next" value={next} />
       <p className="text-[15px] text-muted">
         Enter the code we sent to <strong className="text-navy">{start.sentTo}</strong>.
       </p>
-      <TestCodeNotice code={devCode} />
       <FormAlert>{state.error}</FormAlert>
       <CodeField error={state.fields?.code} />
       <SubmitButton className={btnPrimary} pendingLabel="Signing in…">
@@ -136,7 +134,6 @@ function CodeVerify({ start, next }: { start: OtpState; next: string }) {
           const fd = new FormData();
           fd.set('destination', start.destination ?? '');
           const res = await requestOtpAction({ step: 'request' }, fd);
-          if (res.devCode) setDevCode(res.devCode);
           return { resendIn: res.resendIn, error: res.error, success: res.error ? undefined : 'We sent a new code.' };
         }}
       />

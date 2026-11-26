@@ -14,7 +14,7 @@ export function PageHero({ eyebrow, title, children }: { eyebrow: string; title:
           <path d="M9 52 50 17 91 52" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-      <div className="shell flex flex-col gap-5 py-[clamp(56px,7vw,96px)]">
+      <div className="shell flex flex-col gap-5 py-[clamp(48px,6vw,80px)]">
         <nav aria-label="Breadcrumb" className="anim-rise text-sm text-muted">
           <Link href="/" className="hover:text-primary">
             Home
@@ -22,7 +22,7 @@ export function PageHero({ eyebrow, title, children }: { eyebrow: string; title:
           <span aria-hidden>/</span> <span className="text-navy">{eyebrow}</span>
         </nav>
         <h1
-          className="anim-rise max-w-4xl font-display text-[clamp(2.3rem,5vw,4rem)] leading-[1.06] font-extrabold tracking-[-0.025em] text-balance text-navy"
+          className="anim-rise max-w-4xl font-display text-[clamp(2.1rem,4.2vw,3.4rem)] leading-[1.06] font-extrabold tracking-[-0.025em] text-balance text-navy"
           style={d(0.08)}
         >
           {title}

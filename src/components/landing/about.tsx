@@ -32,9 +32,9 @@ export function About() {
   const yC = useTransform(scrollYProgress, [0, 1], [90, -30]);
 
   return (
-    <section id="about" className="scroll-mt-20 bg-white py-[clamp(72px,9vw,120px)]">
+    <section id="about" className="scroll-mt-20 bg-white py-[clamp(56px,7vw,96px)]">
       <div className="shell grid items-center gap-16 lg:grid-cols-2">
-        <div ref={ref} className="relative order-2 h-[440px] sm:h-[520px] lg:order-1">
+        <div ref={ref} className="relative order-2 h-[400px] sm:h-[460px] lg:order-1">
           <motion.div style={{ y: yA }} className="absolute top-0 left-0 h-[62%] w-[62%] overflow-hidden rounded-[999px_999px_20px_20px] shadow-xl">
             <Image
               src="/images/sample/living-room-01.jpg"

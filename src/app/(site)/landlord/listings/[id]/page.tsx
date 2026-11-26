@@ -4,12 +4,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { setListingPausedAction, submitListingAction } from '@/app/actions/landlord';
-import { sandboxReviewAction } from '@/app/actions/sandbox';
 import { ActionButton } from '@/components/action-button';
 import { PanelSkeleton } from '@/components/skeletons';
 import { Alert, Badge, btn, card } from '@/components/ui';
 import { api, isApiError } from '@/lib/api';
-import { DEV_TOOLS } from '@/lib/config';
 import { requireLandlord } from '@/lib/dal';
 import { formatDate, formatDateTime, formatMoney, LISTING_STATUS_UI } from '@/lib/format';
 import type { OwnListing } from '@/lib/types';
@@ -144,18 +142,6 @@ async function View({ params, searchParams }: Pick<PageProps<'/landlord/listings
             <p className="text-xs text-muted">Available from {formatDate(l.availableFrom)} · Updated {formatDateTime(l.updatedAt)}</p>
           </div>
 
-          {DEV_TOOLS && (l.status === 'submitted' || l.status === 'in_review') && (
-            <div className="flex flex-col gap-2 rounded-[14px] border border-dashed border-primary/50 bg-primary-soft p-4">
-              <p className="text-sm font-semibold text-primary">Development only: act as the reviewer</p>
-              <p className="text-xs text-muted">In production this happens in the admin console’s review queue.</p>
-              <ActionButton action={sandboxReviewAction.bind(null, l.id, 'approve')} className={`${btn.primary} ${btn.small} w-full`}>
-                Approve and publish
-              </ActionButton>
-              <ActionButton action={sandboxReviewAction.bind(null, l.id, 'request_changes')} className={`${btn.secondary} ${btn.small} w-full`}>
-                Request changes
-              </ActionButton>
-            </div>
-          )}
         </aside>
       </div>
     </div>

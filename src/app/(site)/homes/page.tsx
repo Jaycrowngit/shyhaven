@@ -37,7 +37,9 @@ export default function HomesPage({ searchParams }: PageProps<'/homes'>) {
 }
 
 async function Results({ searchParams }: { searchParams: PageProps<'/homes'>['searchParams'] }) {
-  const params = parseSearchParams(await searchParams);
+  // Cheapest homes first unless the renter picks another order.
+  const parsed = parseSearchParams(await searchParams);
+  const params = { ...parsed, sort: parsed.sort ?? ('price_asc' as const) };
   const [result, cities] = await Promise.all([searchListings(params), getCities()]);
   const offset = Number(params.cursor ?? 0);
   const hasFilters = Boolean(params.q || params.city || params.type || params.minBeds || params.maxRent);
@@ -135,16 +137,16 @@ function Filters({ params, cities }: { params: SearchParams; cities: string[] })
         <label htmlFor="f-rent" className="sr-only">Maximum rent per year</label>
         <select id="f-rent" name="maxRent" defaultValue={params.maxRent?.toString() ?? ''} className={select}>
           <option value="">Any price</option>
-          {[1_000_000, 2_000_000, 3_000_000, 5_000_000, 8_000_000, 12_000_000, 20_000_000].map((n) => (
-            <option key={n} value={n}>Up to ₦{(n / 1_000_000).toLocaleString('en-NG')}m / yr</option>
+          {[300_000, 400_000, 500_000, 600_000, 800_000, 1_000_000].map((n) => (
+            <option key={n} value={n}>Up to ₦{n.toLocaleString('en-NG')} / yr</option>
           ))}
         </select>
       </div>
       <div>
         <label htmlFor="f-sort" className="sr-only">Sort by</label>
-        <select id="f-sort" name="sort" defaultValue={params.sort ?? 'newest'} className={select}>
-          <option value="newest">Newest</option>
+        <select id="f-sort" name="sort" defaultValue={params.sort} className={select}>
           <option value="price_asc">Lowest price</option>
+          <option value="newest">Newest</option>
           <option value="price_desc">Highest price</option>
         </select>
       </div>

@@ -21,6 +21,11 @@
   --font-display: var(--font-jakarta);
 }
 
+/* Navbar shows full links from 1120px, so 1280px laptops (minus the scrollbar) get the desktop nav. */
+@theme {
+  --breakpoint-nav: 70rem;
+}
+
 /* Page width: full screen width with side padding that grows with the screen. Capped only on ultra-wide monitors. */
 @utility shell {
   width: 100%;

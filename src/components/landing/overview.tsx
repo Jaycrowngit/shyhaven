@@ -31,7 +31,7 @@ const PAGES = [
 
 export function Overview() {
   return (
-    <section className="bg-white py-[clamp(64px,8vw,104px)]">
+    <section className="bg-white py-[clamp(52px,6vw,84px)]">
       <div className="shell flex flex-col gap-12">
         <SectionHeading eyebrow="What we do" title="Renting in Nigeria, without the risk">
           SkyHaven checks every home, holds the rent until move-in, and stays in the middle until the keys change hands.

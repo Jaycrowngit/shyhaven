@@ -37,13 +37,13 @@ function LinkRow({ isActive }: { isActive: (l: NavLink) => boolean }) {
             key={l.href}
             href={l.href}
             aria-current={active ? 'page' : undefined}
-            className={`group relative rounded-full px-4 py-2 text-[15px] leading-none font-semibold tracking-[-0.005em] whitespace-nowrap transition-colors ${
+            className={`group relative rounded-full px-3 py-2 text-[14px] leading-none xl:px-4 xl:text-[15px] font-semibold tracking-[-0.005em] whitespace-nowrap transition-colors ${
               active ? 'text-primary' : 'text-navy hover:text-primary'
             }`}
           >
             {l.label}
             <span
-              className={`absolute inset-x-4 -bottom-1 h-0.5 origin-left rounded-full bg-primary transition-transform duration-300 ${
+              className={`absolute inset-x-3 -bottom-1 xl:inset-x-4 h-0.5 origin-left rounded-full bg-primary transition-transform duration-300 ${
                 active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
               }`}
             />
@@ -85,18 +85,18 @@ export function NavBar({ desktopAuth, mobileAuth }: { desktopAuth: ReactNode; mo
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-white focus:px-3 focus:py-2">
           Skip to content
         </a>
-        <div className="shell flex h-[76px] items-center justify-between gap-6 xl:grid xl:grid-cols-[1fr_auto_1fr]">
+        <div className="shell flex h-[68px] items-center justify-between gap-6 xl:grid xl:grid-cols-[1fr_auto_1fr]">
           <Link href="/" aria-label="SkyHaven home" className="shrink-0 justify-self-start">
             <Logo className="h-7 w-auto sm:h-8" />
           </Link>
 
-          <nav aria-label="Main" className="hidden items-center gap-1 xl:flex">
+          <nav aria-label="Main" className="hidden items-center gap-0.5 nav:flex xl:gap-1">
             <Suspense fallback={<LinkRow isActive={() => false} />}>
               <DesktopLinks />
             </Suspense>
           </nav>
 
-          <div className="hidden items-center justify-self-end gap-3 xl:flex">{desktopAuth}</div>
+          <div className="hidden items-center justify-self-end gap-2 nav:flex xl:gap-3">{desktopAuth}</div>
 
           <button
             type="button"
@@ -104,7 +104,7 @@ export function NavBar({ desktopAuth, mobileAuth }: { desktopAuth: ReactNode; mo
             aria-expanded={open}
             aria-controls={menuId}
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-white xl:hidden"
+            className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-white nav:hidden"
           >
             {[-6, 0, 6].map((y, i) => (
               <motion.span
@@ -125,7 +125,7 @@ export function NavBar({ desktopAuth, mobileAuth }: { desktopAuth: ReactNode; mo
           <>
             <motion.div
               key="scrim"
-              className="fixed inset-0 top-[76px] z-40 bg-navy/30 backdrop-blur-[2px] xl:hidden"
+              className="fixed inset-0 top-[68px] z-40 bg-navy/30 backdrop-blur-[2px] nav:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -135,7 +135,7 @@ export function NavBar({ desktopAuth, mobileAuth }: { desktopAuth: ReactNode; mo
               key="panel"
               id={menuId}
               aria-label="Mobile"
-              className="fixed top-[76px] right-0 bottom-0 z-50 flex w-full max-w-sm flex-col gap-1 overflow-y-auto border-l border-border bg-white px-5 pt-4 pb-8 xl:hidden"
+              className="fixed top-[68px] right-0 bottom-0 z-50 flex w-full max-w-sm flex-col gap-1 overflow-y-auto border-l border-border bg-white px-5 pt-4 pb-8 nav:hidden"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}

@@ -39,7 +39,7 @@ const PLANS = [
 
 export function Pricing() {
   return (
-    <section id="pricing" className="scroll-mt-20 border-y border-border bg-[#F5F8FC] py-[clamp(72px,9vw,120px)]">
+    <section id="pricing" className="scroll-mt-20 border-y border-border bg-[#F5F8FC] py-[clamp(56px,7vw,96px)]">
       <div className="shell flex flex-col gap-12">
         <SectionHeading eyebrow="What it costs" title="Simple pricing. No hidden fees." center>
           Renters never pay to search or inspect. Landlords never pay to list. SkyHaven earns only when a tenant actually moves in.

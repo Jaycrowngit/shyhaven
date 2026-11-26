@@ -7,8 +7,6 @@ import type { WizardValues } from '@/lib/listing-draft';
 import { PanelSkeleton } from '@/components/skeletons';
 import { Alert, btn, PageHeader } from '@/components/ui';
 import { api, isApiError } from '@/lib/api';
-import { SAMPLE_PHOTO_OPTIONS } from '@/lib/api/mock/seed';
-import { IS_SANDBOX } from '@/lib/config';
 import { requireLandlord } from '@/lib/dal';
 import { isSetupComplete } from '@/lib/landlord';
 import type { OwnListing } from '@/lib/types';
@@ -82,7 +80,7 @@ async function Editor({ params }: { params: PageProps<'/landlord/listings/[id]/e
       <ListingWizard
         initial={initial}
         listingId={listing.id}
-        samplePhotos={IS_SANDBOX ? SAMPLE_PHOTO_OPTIONS : null}
+        
         canSubmit={isSetupComplete(profile) && (listing.status === 'draft' || listing.status === 'changes_requested')}
       />
     </>

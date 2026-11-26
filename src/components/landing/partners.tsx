@@ -11,7 +11,7 @@ export function Partners() {
   const half = Math.ceil(PARTNERS.length / 2);
   const rows = [PARTNERS.slice(0, half), PARTNERS.slice(half)];
   return (
-    <section id="partners" className="scroll-mt-20 overflow-hidden bg-white py-[clamp(72px,9vw,112px)]">
+    <section id="partners" className="scroll-mt-20 overflow-hidden bg-white py-[clamp(56px,7vw,92px)]">
       <div className="shell">
         <SectionHeading eyebrow="Partners & sponsors" title="Built with partners who share our standards" center>
           The organisations that help us verify homes, protect payments and pay landlords.

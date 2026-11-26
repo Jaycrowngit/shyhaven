@@ -6,8 +6,6 @@ import { emptyWizardValues } from '@/lib/listing-draft';
 import { PanelSkeleton } from '@/components/skeletons';
 import { PageHeader } from '@/components/ui';
 import { api } from '@/lib/api';
-import { SAMPLE_PHOTO_OPTIONS } from '@/lib/api/mock/seed';
-import { IS_SANDBOX } from '@/lib/config';
 import { requireLandlord } from '@/lib/dal';
 import { lagosDate } from '@/lib/dates';
 import { isSetupComplete } from '@/lib/landlord';
@@ -32,7 +30,7 @@ async function Wizard() {
   return (
     <ListingWizard
       initial={emptyWizardValues(lagosDate())}
-      samplePhotos={IS_SANDBOX ? SAMPLE_PHOTO_OPTIONS : null}
+      
       canSubmit={isSetupComplete(profile)}
     />
   );

@@ -39,7 +39,7 @@ async function UserNav({ variant }: { variant: 'desktop' | 'mobile' }) {
       </>
     ) : (
       <>
-        <Link href="/sign-in" className="rounded-full px-4 py-2 text-[15px] font-semibold whitespace-nowrap text-navy hover:text-primary">
+        <Link href="/sign-in" className="rounded-full px-3 py-2 text-[14px] font-semibold whitespace-nowrap text-navy hover:text-primary xl:px-4 xl:text-[15px]">
           Sign In
         </Link>
         <Link href="/sign-up" className={`${btn.primary} ${btn.small} px-5 whitespace-nowrap`}>

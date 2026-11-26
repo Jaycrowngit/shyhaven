@@ -4,7 +4,6 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { api, isApiError } from '@/lib/api';
 import type { CodeSent } from '@/lib/api/contract';
-import { IS_SANDBOX } from '@/lib/config';
 import type { FormState } from '@/lib/form-state';
 import {
   codeSchema,
@@ -19,13 +18,10 @@ import {
 import { clearSession, cookieOptions, getAccessToken, safeNext, setSession } from '@/lib/session';
 
 const message = (e: unknown, fallback: string) => (isApiError(e) ? e.message : fallback);
-/** The code itself is only ever shown when running on test data, where no SMS is sent. */
-const devCode = (res: { devCode?: string }) => (IS_SANDBOX ? res.devCode : undefined);
 
 export interface CodeStep extends FormState {
   sentTo?: string;
   resendIn?: number;
-  devCode?: string;
 }
 
 // ---------------------------------------------------------------- Sign up
@@ -56,7 +52,7 @@ export async function signUpAction(_prev: SignUpState, formData: FormData): Prom
   const input = { name: `${firstName} ${lastName}`, phone, email, password, intent };
   try {
     const res = await api.startSignup(input);
-    return { step: 'verify', values, signupId: res.signupId, sentTo: res.sentTo, resendIn: res.resendIn, devCode: devCode(res) };
+    return { step: 'verify', values, signupId: res.signupId, sentTo: res.sentTo, resendIn: res.resendIn };
   } catch (e) {
     return { step: 'details', values, error: message(e, 'We couldn’t send your code. Please try again.'), fields: isApiError(e) ? e.fields : undefined };
   }
@@ -79,7 +75,7 @@ export async function verifySignUpAction(prev: SignUpState, formData: FormData):
 export async function resendSignUpCodeAction(signupId: string): Promise<CodeStep> {
   try {
     const res: CodeSent = await api.resendSignupCode(signupId);
-    return { sentTo: res.sentTo, resendIn: res.resendIn, devCode: devCode(res), success: 'We sent a new code.' };
+    return { sentTo: res.sentTo, resendIn: res.resendIn, success: 'We sent a new code.' };
   } catch (e) {
     return { error: message(e, 'We couldn’t send a new code. Please try again.') };
   }
@@ -115,7 +111,7 @@ export async function requestOtpAction(_prev: OtpState, formData: FormData): Pro
   if (!parsed.success) return { step: 'request', fields: fieldErrors(parsed.error) };
   try {
     const res = await api.requestOtp(parsed.data.destination);
-    return { step: 'verify', destination: parsed.data.destination.destination, sentTo: res.sentTo, resendIn: 60, devCode: devCode(res) };
+    return { step: 'verify', destination: parsed.data.destination.destination, sentTo: res.sentTo, resendIn: 60 };
   } catch (e) {
     return { step: 'request', error: message(e, 'We couldn’t send a code. Please try again.') };
   }
@@ -148,7 +144,7 @@ export async function forgotPasswordAction(_prev: ResetState, formData: FormData
   if (!parsed.success) return { step: 'request', identifier, fields: fieldErrors(parsed.error) };
   try {
     const res = await api.requestPasswordReset({ identifier: parsed.data.identifier.destination });
-    return { step: 'verify', identifier, resetId: res.resetId, sentTo: res.sentTo, resendIn: res.resendIn, devCode: devCode(res) };
+    return { step: 'verify', identifier, resetId: res.resetId, sentTo: res.sentTo, resendIn: res.resendIn };
   } catch (e) {
     return { step: 'request', identifier, error: message(e, 'We couldn’t send a code. Please try again.') };
   }
@@ -159,7 +155,7 @@ export async function resendResetCodeAction(identifier: string): Promise<CodeSte
   if (!parsed.success) return { error: 'Please start again.' };
   try {
     const res = await api.requestPasswordReset({ identifier: parsed.data.identifier.destination });
-    return { resetId: res.resetId, sentTo: res.sentTo, resendIn: res.resendIn, devCode: devCode(res), success: 'We sent a new code.' };
+    return { resetId: res.resetId, sentTo: res.sentTo, resendIn: res.resendIn, success: 'We sent a new code.' };
   } catch (e) {
     return { error: message(e, 'We couldn’t send a new code. Please try again.') };
   }

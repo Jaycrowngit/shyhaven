@@ -21,7 +21,7 @@ const STATS = [
 
 export function Trust() {
   return (
-    <section id="trust" className="scroll-mt-20 bg-white py-[clamp(72px,9vw,120px)]">
+    <section id="trust" className="scroll-mt-20 bg-white py-[clamp(56px,7vw,96px)]">
       <div className="shell flex flex-col gap-12 ">
         <SectionHeading eyebrow="Trust & safety" title="Trust you can check, not just take our word for" center>
           We don’t ask you to trust a stranger. We do the checking, we hold the money, and we stay in the middle until the keys change hands.

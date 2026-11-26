@@ -40,7 +40,7 @@ export const FAQ: QA[] = [
 
 export function Faq() {
   return (
-    <section id="faq" className="scroll-mt-20 border-y border-border bg-[#F5F8FC] py-[clamp(72px,9vw,120px)]">
+    <section id="faq" className="scroll-mt-20 border-y border-border bg-[#F5F8FC] py-[clamp(56px,7vw,96px)]">
       <div className="shell grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="flex flex-col gap-6">
           <SectionHeading eyebrow="FAQ" title="Questions Nigerians ask us">

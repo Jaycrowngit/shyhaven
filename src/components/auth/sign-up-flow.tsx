@@ -7,7 +7,7 @@ import { resendSignUpCodeAction, signUpAction, verifySignUpAction, type SignUpSt
 import { fieldErrors, signUpSchema } from '@/lib/schemas';
 import { SubmitButton } from '../submit-button';
 import { CheckIcon, KeyIcon, ShieldIcon } from '../ui';
-import { CodeField, FormAlert, PasswordField, PhoneField, ResendCode, TestCodeNotice, TextField } from './fields';
+import { CodeField, FormAlert, PasswordField, PhoneField, ResendCode, TextField } from './fields';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const btnPrimary =
@@ -257,15 +257,14 @@ function BackButton({ onClick }: { onClick: () => void }) {
 
 function VerifyStep({ start, next, onBack }: { start: SignUpState; next: string; onBack: () => void }) {
   const [state, verify] = useActionState(verifySignUpAction, start);
-  const [sent, setSent] = useState({ to: start.sentTo, devCode: start.devCode });
+  const [sentTo, setSentTo] = useState(start.sentTo);
   return (
     <>
       <p className="mb-5 text-center text-[15px] text-muted">
-        Enter the 6-digit code we sent to <strong className="text-navy">{sent.to}</strong>. It expires in 10 minutes.
+        Enter the 6-digit code we sent to <strong className="text-navy">{sentTo}</strong>. It expires in 10 minutes.
       </p>
       <form action={verify} className="flex flex-col gap-5" noValidate>
         <input type="hidden" name="next" value={next} />
-        <TestCodeNotice code={sent.devCode} />
         <FormAlert>{state.error}</FormAlert>
         {state.step === 'details' && (
           <p className="text-sm">
@@ -286,7 +285,7 @@ function VerifyStep({ start, next, onBack }: { start: SignUpState; next: string;
           initialSeconds={start.resendIn ?? 60}
           onResend={async () => {
             const res = await resendSignUpCodeAction(start.signupId!);
-            if (res.sentTo) setSent({ to: res.sentTo, devCode: res.devCode });
+            if (res.sentTo) setSentTo(res.sentTo);
             return res;
           }}
         />

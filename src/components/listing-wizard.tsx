@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useMemo, useState, useTransition } from 'react';
 import { saveListingAction } from '@/app/actions/landlord';
 import { formatMoney, LISTING_TYPE_LABEL } from '@/lib/format';
@@ -40,13 +39,10 @@ const toInput = (v: WizardValues): unknown => ({
 export function ListingWizard({
   initial,
   listingId,
-  samplePhotos,
   canSubmit,
 }: {
   initial: WizardValues;
   listingId?: string;
-  /** Sandbox only: stock photos to pick from instead of uploading. */
-  samplePhotos: { key: string; url: string; alt: string }[] | null;
   canSubmit: boolean;
 }) {
   const [values, setValues] = useState(initial);
@@ -211,36 +207,7 @@ export function ListingWizard({
               Add at least 5 recent photos you took yourself: the outside, the living room, the kitchen, every bedroom and a bathroom. The first photo is
               the cover. Photos found on other websites are rejected.
             </p>
-            {samplePhotos ? (
-              <>
-                <Alert tone="info">Photo upload isn’t connected yet, so choose from these sample photos. Click them in the order you want them shown.</Alert>
-                <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-                  {samplePhotos.map((p) => {
-                    const pos = values.photoKeys.indexOf(p.key);
-                    return (
-                      <li key={p.key}>
-                        <button
-                          type="button"
-                          aria-pressed={pos >= 0}
-                          aria-label={`${p.alt}${pos >= 0 ? `, photo ${pos + 1}` : ''}`}
-                          onClick={() => set('photoKeys', pos >= 0 ? values.photoKeys.filter((k) => k !== p.key) : [...values.photoKeys, p.key])}
-                          className={`relative block aspect-[4/3] w-full overflow-hidden rounded-[10px] border-2 ${pos >= 0 ? 'border-primary' : 'border-transparent'}`}
-                        >
-                          <Image src={p.url} alt="" fill sizes="200px" className="object-cover" />
-                          {pos >= 0 && (
-                            <span className="absolute top-1.5 left-1.5 flex h-6 min-w-6 items-center justify-center rounded-full bg-primary px-1.5 text-xs font-bold text-on-primary">
-                              {pos === 0 ? 'Cover' : pos + 1}
-                            </span>
-                          )}
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </>
-            ) : (
-              <Alert tone="warning">Photo upload needs the API’s signed upload URL endpoint (POST /listings/:id/media/upload-url), which isn’t live yet.</Alert>
-            )}
+            <Alert tone="warning">Photo upload isn’t available yet. It opens once the SkyHaven server is connected.</Alert>
             <p className="text-sm" aria-live="polite">
               {values.photoKeys.length} selected{values.photoKeys.length < 5 ? `, ${5 - values.photoKeys.length} more needed` : ''}
             </p>

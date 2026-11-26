@@ -24,12 +24,11 @@ export interface SignupInput {
   intent: 'rent' | 'list';
 }
 
-/** Where a code was sent, masked. `devCode` is only present against the in-memory API, where no SMS is sent. */
+/** Where a code was sent, masked. The code itself only ever goes to the user's phone or email. */
 export interface CodeSent {
   sentTo: string;
   /** Seconds before another code can be requested. */
   resendIn: number;
-  devCode?: string;
 }
 
 /**
@@ -57,7 +56,7 @@ export interface SkyHavenApi {
   completePasswordReset(input: { resetToken: string; password: string }): Promise<AuthTokens & { user: User }>;
 
   // One-time-code sign-in for existing accounts: POST /auth/otp/request, /auth/otp/verify; /auth/refresh; GET /me
-  requestOtp(input: { channel: 'phone' | 'email'; destination: string }): Promise<{ sentTo: string; devCode?: string }>;
+  requestOtp(input: { channel: 'phone' | 'email'; destination: string }): Promise<{ sentTo: string }>;
   verifyOtp(input: { destination: string; code: string }): Promise<AuthTokens & { user: User }>;
   refresh(refreshToken: string): Promise<AuthTokens>;
   logout(token: string): Promise<void>;
